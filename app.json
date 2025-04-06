@@ -32,7 +32,17 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": ["node_modules/@expo-google-fonts/inter/Inter_900Black.ttf"]
+        }
       ]
+    ],
+
+    "assetBundlePatterns": [
+      "**/*" // This ensures all assets in your project are bundled
     ],
     "experiments": {
       "typedRoutes": true
