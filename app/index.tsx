@@ -64,7 +64,7 @@ export default function Index() {
           <TouchableOpacity
             style={style.button}
             onPress={() => {
-              router.replace("/signin");
+              router.replace("/signup");
             }}
           >
             <Text
