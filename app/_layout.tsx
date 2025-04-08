@@ -10,7 +10,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { ClerkProvider } from '@clerk/clerk-expo'
-
+import '@/global.css'
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     Inter_900Black,
