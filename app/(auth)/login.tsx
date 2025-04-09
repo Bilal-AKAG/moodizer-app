@@ -9,15 +9,18 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Input from "../componets/custominput";
+import { useForm } from "react-hook-form";
+import Custumbutton from "../componets/custombutton";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLogin = () => {
+  const {control,handleSubmit} = useForm();
+  const handleLogin = (data:any) => {
     // Add your login logic here
-    console.log("Email:", email);
-    console.log("Password:", password);
+    console.log("Email:", data.Email);
+    console.log("Password:", data.Password);
     router.replace("/(dashboard)"); // Navigate to the dashboard after login
   };
 
@@ -31,29 +34,29 @@ export default function Login() {
       <Text style={styles.subtitle}>Log in to continue</Text>
 
       <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor="#aaa"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
+        <Input 
+         style={styles.input}
+         name={"Email"}
+         placeholder="Email"
+         placeholderTextColor="#aaa"
+         keyboardType="email-address"
+         control={control}        
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor="#aaa"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
+        <Input 
+         style={styles.input}
+         name={"Password"}
+         placeholder="Password"
+         placeholderTextColor="#aaa"
+         secureTextEntry
+         control={control}        
         />
+        
       </View>
-
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginButtonText}>Login</Text>
-        <AntDesign name="arrowright" size={20} color="white" />
-      </TouchableOpacity>
-
+      <Custumbutton
+        title="Login"
+        style={styles.loginButton}
+        onPress={handleSubmit(handleLogin)}
+      />
       <Text style={styles.forgotPassword}>Forgot your password?</Text>
 
       <View style={styles.signupContainer}>

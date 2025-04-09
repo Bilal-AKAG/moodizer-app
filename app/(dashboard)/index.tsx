@@ -8,7 +8,5 @@ const index = () => {
     </View>
   )
 }
-
 export default index
-
 const styles = StyleSheet.create({})
