@@ -12,12 +12,21 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Input from "../componets/custominput";
 import { useForm } from "react-hook-form";
 import Custumbutton from "../componets/custombutton";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+//validation for inputs
+const signinshcema = z.object({
+  Email:z.string().email(),
+  Password:z.string().min(8,{message: 'password must be min of 8 char'})
+})
+type signintype = z.infer<typeof signinshcema>;
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const {control,handleSubmit} = useForm();
-  const handleLogin = (data:any) => {
+  const {control,handleSubmit} = useForm({
+    resolver:zodResolver(signinshcema)
+  });
+  const handleLogin = (data:signintype) => {
     // Add your login logic here
     console.log("Email:", data.Email);
     console.log("Password:", data.Password);
