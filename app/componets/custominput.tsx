@@ -26,7 +26,7 @@ export default function Input({ name, control, ...props }: inputprops) {
           onBlur={onBlur}
           {...props}
         />
-        {<Text className="text-red-700 ">{error?.message}</Text>}
+        {<Text className="text-red-700 p-2 ml-2 -mt-4">{error?.message}</Text>}
         </>
         
       )}

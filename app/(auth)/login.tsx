@@ -15,6 +15,7 @@ import Custumbutton from "../componets/custombutton";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
+
 //validation for inputs
 const signinshcema = z.object({
   Email:z.string().email(),
@@ -76,6 +77,8 @@ export default function Login() {
         >
           Sign Up
         </Text>
+
+        
       </View>
     </View>
   );
