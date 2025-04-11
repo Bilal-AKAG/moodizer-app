@@ -13,27 +13,48 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Input from "../componets/custominput";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {z } from 'zod';
 
+const signupaschema = z. object({
+  Username:z.string().min(4,{message:'username must be more than 4 char'}).regex(/^[^\d]/, { message: "username can't start with number" }),
+  Email:z.string().email(),
+  Password:z.string().min(8,{message:"password must be min of 8 char"}),
+  RePassword:z.string().min(8,{message:"password must be min of 8 char"})
+}
+).refine((data)=>data.Password===data.RePassword,{
+  message:"passwords do not match",
+  path:["RePassword"],
+});
+
+type signuptype = z.infer<typeof signupaschema>;
 export default function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSignUp = () => {
-    if (!username || !email || !password || !confirmPassword) {
-      Alert.alert("Error", "Please fill in all fields.");
-      return;
-    }
+  const {control,handleSubmit} = useForm({
+    resolver:zodResolver(signupaschema)
+  })
 
-    if (password !== confirmPassword) {
-      Alert.alert("Error", "Passwords do not match.");
-      return;
-    }
+  const handleSignUp = (data:signuptype) => {
+    // if (!username || !email || !password || !confirmPassword) {
+    //   Alert.alert("Error", "Please fill in all fields.");
+    //   return;
+    // }
 
-    console.log("Username:", username);
-    console.log("Email:", email);
-    console.log("Password:", password);
+    // if (password !== confirmPassword) {
+    //   Alert.alert("Error", "Passwords do not match.");
+    //   return;
+    // }
+  
+    //jsut to check if the inputs are correctly passing
+    console.log("Username:", data.Username);
+    console.log("Email:", data.Email);
+    console.log("Password:", data.Password);
 
     router.replace("/(dashboard)");
   };
@@ -54,46 +75,47 @@ export default function SignUp() {
 
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Username</Text>
-            <TextInput
+            <Input
+              name="Username"
               style={styles.input}
               placeholder="Enter your username"
               placeholderTextColor="#aaa"
-              value={username}
-              onChangeText={setUsername}
+              control={control}
             />
 
             <Text style={styles.label}>Email</Text>
-            <TextInput
+
+            <Input
               style={styles.input}
               placeholder="Enter your email"
               placeholderTextColor="#aaa"
               keyboardType="email-address"
-              value={email}
-              onChangeText={setEmail}
+              control={control}
+              name="Email"
             />
 
             <Text style={styles.label}>Password</Text>
-            <TextInput
+            <Input
               style={styles.input}
               placeholder="Enter your password"
               placeholderTextColor="#aaa"
               secureTextEntry
-              value={password}
-              onChangeText={setPassword}
+              control={control}
+              name="Password"
             />
 
             <Text style={styles.label}>Confirm Password</Text>
-            <TextInput
+            <Input
               style={styles.input}
               placeholder="Re-enter your password"
               placeholderTextColor="#aaa"
               secureTextEntry
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
+              control={control}
+              name="RePassword"
             />
           </View>
 
-          <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+          <TouchableOpacity style={styles.signUpButton} onPress={ handleSubmit(handleSignUp)}>
             <Text style={styles.signUpButtonText}>Sign Up</Text>
             <AntDesign name="arrowright" size={20} color="white" />
           </TouchableOpacity>
@@ -120,6 +142,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    
     backgroundColor: "#f9f9f9",
     alignItems: "center",
     justifyContent: "center",
@@ -146,6 +169,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: "100%",
     marginBottom: 20,
+   
   },
   label: {
     fontSize: 14,
