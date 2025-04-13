@@ -1,10 +1,17 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Link, router } from "expo-router";
+import { SafeAreaView ,SafeAreaProvider} from 'react-native-safe-area-context';
+import React from "react";
 export default function Index() {
   return (
-    <View style={style.container}>
+    <SafeAreaProvider>
+
+    
+    <SafeAreaView style={style.container}>
+    <ScrollView>    
+    <View  >
       <View style={style.header}>
         <View
           style={{
@@ -64,7 +71,7 @@ export default function Index() {
           <TouchableOpacity
             style={style.button}
             onPress={() => {
-              router.replace("/signup");
+              router.push("/signup");
             }}
           >
             <Text
@@ -98,6 +105,9 @@ export default function Index() {
         </View>
       </View>
     </View>
+    </ScrollView>
+    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 const style = StyleSheet.create({
@@ -105,7 +115,7 @@ const style = StyleSheet.create({
     paddingBlock: 20,
     flex: 1,
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor:'white'
   },
   moreinfo: {
     marginTop: 20,

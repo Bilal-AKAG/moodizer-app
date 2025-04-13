@@ -11,6 +11,9 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { ClerkProvider } from '@clerk/clerk-expo'
 import '@/global.css'
+import React from "react";
+import {  } from "react-native";
+import {StatusBar} from 'expo-status-bar';
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     Inter_900Black,
@@ -31,12 +34,13 @@ export default function RootLayout() {
   }
 
   return (
-    <ClerkProvider>
-      <Stack>
+  
+      <Stack >
+        {/* <StutusBar style/> */}
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(dashboard)" options={{ headerShown: false }} />
       </Stack>
-    </ClerkProvider>
+    
   );
 }
