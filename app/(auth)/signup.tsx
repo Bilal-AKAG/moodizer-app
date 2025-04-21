@@ -13,21 +13,27 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import Input from "../componets/custominput";
+import Input from "../../componets/custominput";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {z } from 'zod';
+import { z } from "zod";
 
-const signupaschema = z. object({
-  Username:z.string().min(4,{message:'username must be more than 4 char'}).regex(/^[^\d]/, { message: "username can't start with number" }),
-  Email:z.string().email(),
-  Password:z.string().min(8,{message:"password must be min of 8 char"}),
-  RePassword:z.string().min(8,{message:"password must be min of 8 char"})
-}
-).refine((data)=>data.Password===data.RePassword,{
-  message:"passwords do not match",
-  path:["RePassword"],
-});
+const signupaschema = z
+  .object({
+    Username: z
+      .string()
+      .min(4, { message: "username must be more than 4 char" })
+      .regex(/^[^\d]/, { message: "username can't start with number" }),
+    Email: z.string().email(),
+    Password: z.string().min(8, { message: "password must be min of 8 char" }),
+    RePassword: z
+      .string()
+      .min(8, { message: "password must be min of 8 char" }),
+  })
+  .refine((data) => data.Password === data.RePassword, {
+    message: "passwords do not match",
+    path: ["RePassword"],
+  });
 
 type signuptype = z.infer<typeof signupaschema>;
 export default function SignUp() {
@@ -36,11 +42,11 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const {control,handleSubmit} = useForm({
-    resolver:zodResolver(signupaschema)
-  })
+  const { control, handleSubmit } = useForm({
+    resolver: zodResolver(signupaschema),
+  });
 
-  const handleSignUp = (data:signuptype) => {
+  const handleSignUp = (data: signuptype) => {
     // if (!username || !email || !password || !confirmPassword) {
     //   Alert.alert("Error", "Please fill in all fields.");
     //   return;
@@ -50,7 +56,7 @@ export default function SignUp() {
     //   Alert.alert("Error", "Passwords do not match.");
     //   return;
     // }
-  
+
     //jsut to check if the inputs are correctly passing
     console.log("Username:", data.Username);
     console.log("Email:", data.Email);
@@ -115,7 +121,10 @@ export default function SignUp() {
             />
           </View>
 
-          <TouchableOpacity style={styles.signUpButton} onPress={ handleSubmit(handleSignUp)}>
+          <TouchableOpacity
+            style={styles.signUpButton}
+            onPress={handleSubmit(handleSignUp)}
+          >
             <Text style={styles.signUpButtonText}>Sign Up</Text>
             <AntDesign name="arrowright" size={20} color="white" />
           </TouchableOpacity>
@@ -142,7 +151,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    
+
     backgroundColor: "#f9f9f9",
     alignItems: "center",
     justifyContent: "center",
@@ -169,7 +178,6 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: "100%",
     marginBottom: 20,
-   
   },
   label: {
     fontSize: 14,

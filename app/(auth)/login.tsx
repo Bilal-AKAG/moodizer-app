@@ -9,25 +9,24 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import Input from "../componets/custominput";
+import Input from "../../componets/custominput";
 import { useForm } from "react-hook-form";
-import Custumbutton from "../componets/custombutton";
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-
+import Custumbutton from "../../componets/custombutton";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 //validation for inputs
 const signinshcema = z.object({
-  Email:z.string().email(),
-  Password:z.string().min(8,{message: 'password must be min of 8 char'})
-})
+  Email: z.string().email(),
+  Password: z.string().min(8, { message: "password must be min of 8 char" }),
+});
 type signintype = z.infer<typeof signinshcema>;
 
 export default function Login() {
-  const {control,handleSubmit} = useForm({
-    resolver:zodResolver(signinshcema)
+  const { control, handleSubmit } = useForm({
+    resolver: zodResolver(signinshcema),
   });
-  const handleLogin = (data:signintype) => {
+  const handleLogin = (data: signintype) => {
     // Add your login logic here
     console.log("Email:", data.Email);
     console.log("Password:", data.Password);
@@ -36,31 +35,27 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require("@/assets/images/icon.png")}
-        style={styles.logo}
-      />
+      <Image source={require("@/assets/images/icon.png")} style={styles.logo} />
       <Text style={styles.title}>Welcome Back!</Text>
       <Text style={styles.subtitle}>Log in to continue</Text>
 
       <View style={styles.inputContainer}>
-        <Input 
-         style={styles.input}
-         name={"Email"}
-         placeholder="Email"
-         placeholderTextColor="#aaa"
-         keyboardType="email-address"
-         control={control}        
+        <Input
+          style={styles.input}
+          name={"Email"}
+          placeholder="Email"
+          placeholderTextColor="#aaa"
+          keyboardType="email-address"
+          control={control}
         />
-        <Input 
-         style={styles.input}
-         name={"Password"}
-         placeholder="Password"
-         placeholderTextColor="#aaa"
-         secureTextEntry
-         control={control}        
+        <Input
+          style={styles.input}
+          name={"Password"}
+          placeholder="Password"
+          placeholderTextColor="#aaa"
+          secureTextEntry
+          control={control}
         />
-        
       </View>
       <Custumbutton
         title="Login"
@@ -77,8 +72,6 @@ export default function Login() {
         >
           Sign Up
         </Text>
-
-        
       </View>
     </View>
   );
