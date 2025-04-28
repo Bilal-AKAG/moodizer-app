@@ -4,154 +4,156 @@ import {
   Text,
   View,
   TextInput,
-  TouchableOpacity,
   Image,
-  Alert,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
+  ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import { router } from "expo-router";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import Input from "../../componets/custominput";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import Custumbutton from "@/componets/custombutton";
+import { useAuth } from "@/store/useAuthstore"; // zustand store
+import { z } from "zod"; // Import Zod
+import { User, Mail, Lock } from "lucide-react-native"; // Icons from Lucide
 
-const signupaschema = z
-  .object({
-    Username: z
-      .string()
-      .min(4, { message: "username must be more than 4 char" })
-      .regex(/^[^\d]/, { message: "username can't start with number" }),
-    Email: z.string().email(),
-    Password: z.string().min(8, { message: "password must be min of 8 char" }),
-    RePassword: z
-      .string()
-      .min(8, { message: "password must be min of 8 char" }),
-  })
-  .refine((data) => data.Password === data.RePassword, {
-    message: "passwords do not match",
-    path: ["RePassword"],
-  });
+// Zod schema for validation
+const signUpSchema = z.object({
+  username: z.string().min(3, "Username must be at least 3 characters"),
+  email: z
+    .string()
+    .email("Please enter a valid email")
+    .min(1, "Email is required"),
+  password: z.string().min(4, "Password must be at least 4 characters"),
+});
 
-type signuptype = z.infer<typeof signupaschema>;
 export default function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState<{
+    username?: string;
+    email?: string;
+    password?: string;
+  }>({});
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const signUp = useAuth((state) => state.register);
 
-  const { control, handleSubmit } = useForm({
-    resolver: zodResolver(signupaschema),
-  });
+  const handleSignUp = async () => {
+    // Clear previous errors
+    setErrors({});
+    setIsLoading(true); // Start loading
 
-  const handleSignUp = (data: signuptype) => {
-    // if (!username || !email || !password || !confirmPassword) {
-    //   Alert.alert("Error", "Please fill in all fields.");
-    //   return;
-    // }
+    // Validate input
+    const result = signUpSchema.safeParse({ username, email, password });
+    if (!result.success) {
+      // Map the errors from Zod schema to our error state
+      const newErrors: Record<string, string | undefined> = {};
+      result.error.errors.forEach((error) => {
+        newErrors[error.path[0]] = error.message;
+      });
+      setErrors(newErrors);
+      setIsLoading(false); // Stop loading
+      return;
+    }
 
-    // if (password !== confirmPassword) {
-    //   Alert.alert("Error", "Passwords do not match.");
-    //   return;
-    // }
-
-    //jsut to check if the inputs are correctly passing
-    console.log("Username:", data.Username);
-    console.log("Email:", data.Email);
-    console.log("Password:", data.Password);
-
-    router.replace("/(dashboard)");
+    try {
+      await signUp(username, email, password); // Use store signUp method
+      console.log(password);
+      router.replace("/(app)/(dashboard)");
+    } catch (err: any) {
+      alert(err?.response?.data?.message || "Sign Up failed");
+    } finally {
+      setIsLoading(false); // Stop loading regardless of success or failure
+    }
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-    >
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.container}>
-          <Image
-            source={require("@/assets/images/icon.png")}
-            style={styles.logo}
+    <View style={styles.container}>
+      {/* Logo */}
+      <Image source={require("@/assets/images/icon.png")} style={styles.logo} />
+      <Text style={styles.title}>Create Account</Text>
+      <Text style={styles.subtitle}>Sign up to get started</Text>
+
+      {/* Input Fields */}
+      <View style={styles.inputContainer}>
+        <View
+          style={[
+            styles.inputWrapper,
+            errors.username && { borderColor: "red" },
+          ]}
+        >
+          <User color="#aaa" size={20} />
+          <TextInput
+            style={styles.input}
+            placeholder="Username"
+            placeholderTextColor="#aaa"
+            value={username}
+            onChangeText={setUsername}
           />
-          <Text style={styles.title}>Create an Account</Text>
-          <Text style={styles.subtitle}>Sign up to get started</Text>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Username</Text>
-            <Input
-              name="Username"
-              style={styles.input}
-              placeholder="Enter your username"
-              placeholderTextColor="#aaa"
-              control={control}
-            />
-
-            <Text style={styles.label}>Email</Text>
-
-            <Input
-              style={styles.input}
-              placeholder="Enter your email"
-              placeholderTextColor="#aaa"
-              keyboardType="email-address"
-              control={control}
-              name="Email"
-            />
-
-            <Text style={styles.label}>Password</Text>
-            <Input
-              style={styles.input}
-              placeholder="Enter your password"
-              placeholderTextColor="#aaa"
-              secureTextEntry
-              control={control}
-              name="Password"
-            />
-
-            <Text style={styles.label}>Confirm Password</Text>
-            <Input
-              style={styles.input}
-              placeholder="Re-enter your password"
-              placeholderTextColor="#aaa"
-              secureTextEntry
-              control={control}
-              name="RePassword"
-            />
-          </View>
-
-          <TouchableOpacity
-            style={styles.signUpButton}
-            onPress={handleSubmit(handleSignUp)}
-          >
-            <Text style={styles.signUpButtonText}>Sign Up</Text>
-            <AntDesign name="arrowright" size={20} color="white" />
-          </TouchableOpacity>
-
-          <View style={styles.loginContainer}>
-            <Text style={styles.loginText}>Already have an account? </Text>
-            <Text
-              style={styles.loginLink}
-              onPress={() => router.replace("/login")}
-            >
-              Log In
-            </Text>
-          </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        {errors.username && (
+          <Text style={styles.errorText}>{errors.username}</Text>
+        )}
+
+        <View
+          style={[styles.inputWrapper, errors.email && { borderColor: "red" }]}
+        >
+          <Mail color="#aaa" size={20} />
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor="#aaa"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+          />
+        </View>
+        {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+
+        <View
+          style={[
+            styles.inputWrapper,
+            errors.password && { borderColor: "red" },
+          ]}
+        >
+          <Lock color="#aaa" size={20} />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor="#aaa"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+        </View>
+        {errors.password && (
+          <Text style={styles.errorText}>{errors.password}</Text>
+        )}
+      </View>
+
+      {/* Sign Up Button */}
+    <Custumbutton
+    title="signup"
+    loading={isLoading}
+    onPress={handleSignUp}
+    style={{ width:350 }}
+/>
+
+      {/* Already Have an Account */}
+      <View style={styles.signupContainer}>
+        <Text style={styles.signupText}>Already have an account? </Text>
+        <Text
+          style={styles.signupLink}
+          onPress={() => router.replace("/login")}
+        >
+          Login
+        </Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: "center",
-  },
   container: {
     flex: 1,
-
     backgroundColor: "#f9f9f9",
     alignItems: "center",
     justifyContent: "center",
@@ -179,52 +181,58 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 20,
   },
-  label: {
-    fontSize: 14,
-    color: "#555",
-    fontFamily: "Poppins_500Medium",
-    marginBottom: 5,
-  },
-  input: {
-    width: "100%",
-    height: 50,
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#fff",
     borderRadius: 8,
     paddingHorizontal: 15,
     marginBottom: 15,
-    fontSize: 16,
-    fontFamily: "Poppins_400Regular",
     borderWidth: 1,
     borderColor: "#ddd",
+    height: 50,
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+    fontFamily: "Poppins_400Regular",
+    marginLeft: 10,
+    color: "#333",
   },
   signUpButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#06D6A0",
-    width: "100%",
     height: 50,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 8,
-    marginBottom: 20,
+    marginTop: 10,
   },
   signUpButtonText: {
-    color: "white",
-    fontSize: 18,
+    fontSize: 16,
+    color: "#fff",
     fontFamily: "Poppins_700Bold",
-    marginRight: 10,
   },
-  loginContainer: {
+  signupContainer: {
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 20,
   },
-  loginText: {
+  signupText: {
     fontSize: 14,
     color: "#555",
     fontFamily: "Poppins_400Regular",
   },
-  loginLink: {
+  signupLink: {
     fontSize: 14,
     color: "#06D6A0",
     fontFamily: "Poppins_700Bold",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 12,
+    fontFamily: "Poppins_400Regular",
+    marginBottom: 10,
   },
 });

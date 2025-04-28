@@ -1,5 +1,5 @@
 
-import { Stack } from "expo-router";
+
 import { Inter_900Black } from "@expo-google-fonts/inter";
 import {
   Poppins_400Regular,
@@ -9,11 +9,11 @@ import {
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { ClerkProvider } from '@clerk/clerk-expo'
-import '@/global.css'
+import "@/global.css";
 import React from "react";
-import {  } from "react-native";
-import {StatusBar} from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
+import { Slot } from "expo-router";
+
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     Inter_900Black,
@@ -34,13 +34,9 @@ export default function RootLayout() {
   }
 
   return (
-  
-      <Stack >
-        {/* <StutusBar style/> */}
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(dashboard)" options={{ headerShown: false }} />
-      </Stack>
-    
+    <>
+      <StatusBar style="inverted"/>
+      <Slot/> 
+    </>
   );
 }

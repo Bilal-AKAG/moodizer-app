@@ -4,11 +4,10 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Link, router } from "expo-router";
 import { SafeAreaView ,SafeAreaProvider} from 'react-native-safe-area-context';
 import React from "react";
+import { API_URL } from "@/api/api";
 export default function Index() {
   return (
-    <SafeAreaProvider>
-
-    
+    <SafeAreaProvider> 
     <SafeAreaView style={style.container}>
     <ScrollView>    
     <View  >
@@ -17,7 +16,7 @@ export default function Index() {
           style={{
             padding: 2,
             backgroundColor: "#9CFCE3",
-            borderRadius: 50,
+            borderRadius: 10,
           }}
         >
           <Image
@@ -43,9 +42,7 @@ export default function Index() {
           alignItems: "center",
           justifyContent: "center",
           padding: 10,
-          marginTop: 10,
-          // borderColor: "#06D6A0",
-          // borderWidth: 2,
+          marginTop: 10, 
         }}
       >
         <View>
@@ -97,9 +94,9 @@ export default function Index() {
             Already have an account?{" "}
             <Text
               style={{ color: "#06D6A0" }}
-              onPress={() => router.replace("/login")}
+              onPress={() => router.replace("/(auth)/login")}
             >
-              Sign In
+              Sign In 
             </Text>
           </Text>
         </View>
@@ -167,7 +164,7 @@ const style = StyleSheet.create({
     gap: 10,
   },
   header: {
-    marginTop: 10,
+    marginTop: 20,
     flexDirection: "row",
     padding: 8,
     justifyContent: "center",

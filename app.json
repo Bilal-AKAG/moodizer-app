@@ -41,7 +41,8 @@
             "node_modules/@expo-google-fonts/inter/Inter_900Black.ttf"
           ]
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "assetBundlePatterns": [
       "**/*"
