@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Ionicons from "@expo/vector-icons/Ionicons";//Here are you
 import { Link, router } from "expo-router";
 import { SafeAreaView ,SafeAreaProvider} from 'react-native-safe-area-context';
 import React from "react";
@@ -10,8 +10,8 @@ export default function Index() {
 
     
     <SafeAreaView style={style.container}>
-    <ScrollView>    
-    <View  >
+    <ScrollView>
+    <View>
       <View style={style.header}>
         <View
           style={{
