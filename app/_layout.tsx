@@ -1,5 +1,3 @@
-
-
 import { Inter_900Black } from "@expo-google-fonts/inter";
 import {
   Poppins_400Regular,
@@ -13,8 +11,11 @@ import "@/global.css";
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Slot } from "expo-router";
+import { getToken, useAuth } from "@/store/useAuthstore";
+import { useStore } from "zustand";
 
 export default function RootLayout() {
+  const {}=useAuth()
   const [loaded, error] = useFonts({
     Inter_900Black,
     Poppins_400Regular, // Regular weight
@@ -29,14 +30,27 @@ export default function RootLayout() {
     }
   }, [loaded, error]);
 
+  useEffect(() => {
+    const initializeAuth = async () => {
+      const token = await getToken();
+      if (token) {
+        useAuth.setState({ token });
+        await useAuth.getState().getMe();
+      } else {
+        useAuth.setState({ loading: false });
+      }
+    };
+    initializeAuth();
+  }, []);
+
   if (!loaded && !error) {
     return null;
   }
 
   return (
     <>
-      <StatusBar style="inverted"/>
-      <Slot/> 
+      <StatusBar style="inverted" />
+      <Slot />
     </>
   );
 }

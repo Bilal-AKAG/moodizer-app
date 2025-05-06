@@ -1,174 +1,164 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { Link, router } from "expo-router";
-import { SafeAreaView ,SafeAreaProvider} from 'react-native-safe-area-context';
 import React from "react";
-import { API_URL } from "@/api/api";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { ChevronRight, UserPlus, LogIn } from "lucide-react-native";
+import { router } from "expo-router";
+
 export default function Index() {
   return (
-    <SafeAreaProvider> 
-    <SafeAreaView style={style.container}>
-    <ScrollView>    
-    <View  >
-      <View style={style.header}>
-        <View
-          style={{
-            padding: 2,
-            backgroundColor: "#9CFCE3",
-            borderRadius: 10,
-          }}
-        >
-          <Image
-            source={require("../assets/images/icon.png")}
-            style={{ width: 60, height: 60 }}
-          />
-        </View>
-      </View>
-      <View>
-        <Text style={style.text}>
-          Welcome to {"\n"}
-          <Text style={style.textspan}>Moodizer AI</Text>
-        </Text>
-      </View>
-      <View>
-        <Text style={style.description}>
-          A smarter way to track and improve your emotional well-being —
-          anytime, anywhere 🌿
-        </Text>
-      </View>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 10,
-          marginTop: 10, 
-        }}
-      >
-        <View>
-          <Image
-            source={require("../assets/images/landing.png")}
-            style={{ width: 300, height: 300 }}
-            resizeMode="cover"
-          />
-        </View>
-      </View>
-      <View
-        style={{
-         justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text style={style.description}>
-          By signing up, you agree to our{" "}
-          <Text style={{ color: "#06D6A0" }}>Terms of Service</Text> and{" "}
-          <Text style={{ color: "#06D6A0" }}>Privacy Policy</Text>
-        </Text>
-        <View>
-          <TouchableOpacity
-            style={style.button}
-            onPress={() => {
-              router.push("/signup");
-            }}
-          >
-            <Text
-              style={{
-                color: "white",
-                fontSize: 18,
-                fontFamily: "Poppins_700Bold",
-              }}
-            >
-              Get Started
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          {/* Header Section */}
+          <View style={styles.header}>
+            <Image
+              source={require("../assets/images/icon.png")}
+              style={styles.logo}
+            />
+            <Text style={styles.title}>Moodizer AI</Text>
+            <Text style={styles.subtitle}>
+              Track and improve your emotional well-being anytime, anywhere 🌿
             </Text>
-            <AntDesign name="arrowright" size={24} color="white" />
-          </TouchableOpacity>
-        </View>
-        <View style={{ padding: 8,marginBlock:8 }}>
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#155451",
-              fontFamily: "Poppins_400Regular",
-            }}
-          >
-            Already have an account?{" "}
-            <Text
-              style={{ color: "#06D6A0" }}
+          </View>
+
+          {/* Illustration */}
+          <View style={styles.illustrationContainer}>
+            <Image
+              source={require("../assets/images/landing.png")}
+              style={styles.illustration}
+              resizeMode="contain"
+            />
+          </View>
+
+          {/* Call to Action */}
+          <View style={styles.ctaContainer}>
+            <TouchableOpacity
+              style={styles.primaryButton}
+              onPress={() => router.push("/signup")}
+            >
+              <UserPlus color="white" size={20} />
+              <Text style={styles.primaryButtonText}>Get Started</Text>
+              <ChevronRight color="white" size={20} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.secondaryButton}
               onPress={() => router.replace("/(auth)/login")}
             >
-              Sign In 
-            </Text>
+              <LogIn color="#06D6A0" size={20} />
+              <Text style={styles.secondaryButtonText}>Sign In</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Terms and Privacy */}
+          <Text style={styles.termsText}>
+            By signing up, you agree to our{" "}
+            <Text style={styles.linkText}>Terms of Service</Text> and{" "}
+            <Text style={styles.linkText}>Privacy Policy</Text>.
           </Text>
-        </View>
-      </View>
-    </View>
-    </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 }
-const style = StyleSheet.create({
-  container: {
-    paddingBlock: 20,
-    flex: 1,
-    alignItems: "center",
-    backgroundColor:'white'
-  },
-  moreinfo: {
-    marginTop: 20,
-    padding: 8,
-    gap: 14,
-  },
-  infotext: {
-    fontSize: 20,
-    color: "#185855",
-    fontFamily: "Poppins_500Medium",
-  },
 
-  text: {
-    fontSize: 32,
-    gap: 8,
-    marginTop: 10,
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F9FAFB",
+  },
+  scrollContent: {
+    alignItems: "center",
+    padding: 20,
+  },
+  header: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  logo: {
+    width: 80,
+    height: 80,
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
     color: "#155554",
-    padding: 4,
-    lineHeight: 30,
     fontFamily: "Inter_900Black",
     textAlign: "center",
   },
-  textspan: {
-    color: "green",
-    fontSize: 25,
-  },
-  mood: {
-    fontFamily: "Poppins_700Bold",
-    color: "#06D6A0",
-    borderColor: "#07D6A0",
-    borderWidth: 2,
-  },
-  description: {
-    textAlign: "center",
-    padding: 8,
+  subtitle: {
     fontSize: 16,
-    color: "#155451",
+    color: "#555",
     fontFamily: "Poppins_400Regular",
-    lineHeight: 24,
+    textAlign: "center",
+    marginTop: 8,
+    lineHeight: 22,
   },
-  button: {
+  illustrationContainer: {
+    marginVertical: 20,
+    alignItems: "center",
+  },
+  illustration: {
+    width: 300,
+    height: 300,
+  },
+  ctaContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginVertical: 20,
+  },
+  primaryButton: {
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "#06D6A0",
-    paddingBlock: 12,
-    width: 200,
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+    width: "80%",
+    marginBottom: 10,
   },
-  header: {
-    marginTop: 20,
+  primaryButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontFamily: "Poppins_700Bold",
+    marginHorizontal: 10,
+  },
+  secondaryButton: {
     flexDirection: "row",
-    padding: 8,
-    justifyContent: "center",
     alignItems: "center",
-    gap: 10,
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#06D6A0",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+    width: "80%",
+  },
+  secondaryButtonText: {
+    color: "#06D6A0",
+    fontSize: 16,
+    fontFamily: "Poppins_700Bold",
+    marginHorizontal: 10,
+  },
+  termsText: {
+    fontSize: 14,
+    color: "#555",
+    fontFamily: "Poppins_400Regular",
+    textAlign: "center",
+    marginTop: 20,
+    lineHeight: 20,
+  },
+  linkText: {
+    color: "#06D6A0",
+    fontFamily: "Poppins_700Bold",
   },
 });
