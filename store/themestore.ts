@@ -7,7 +7,7 @@ type ThemeStore={
     loadtheme:()=>Promise<void>
 }
 
-const userThemeStore=create<ThemeStore>((set,get)=>({
+export const userThemeStore=create<ThemeStore>((set,get)=>({
     theme:'light',
     toggletheme:()=>{
         const currentTheme=get().theme;

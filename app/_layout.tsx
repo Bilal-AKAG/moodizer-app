@@ -12,10 +12,10 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Slot } from "expo-router";
 import { getToken, useAuth } from "@/store/useAuthstore";
-import { useStore } from "zustand";
+import { userThemeStore } from "@/store/themestore";
 
 export default function RootLayout() {
-  const {}=useAuth()
+  const loadtheme=userThemeStore((state)=>state.loadtheme);
   const [loaded, error] = useFonts({
     Inter_900Black,
     Poppins_400Regular, // Regular weight
@@ -41,6 +41,8 @@ export default function RootLayout() {
       }
     };
     initializeAuth();
+    loadtheme();
+ 
   }, []);
 
   if (!loaded && !error) {
