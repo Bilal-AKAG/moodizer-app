@@ -220,8 +220,6 @@ src/
 - JWT-based authentication
 - Protected routes using middleware
 - Environment variable configuration
-- CORS enabled for secure cross-origin requests
-- Type-safe database operations with Prisma
 - Input validation with Zod schemas
 
 ## 🤝 Contributing

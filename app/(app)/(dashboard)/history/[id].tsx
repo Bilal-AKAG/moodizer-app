@@ -151,7 +151,7 @@ export default function HistoryDetail() {
           </Text>
 
           {/* Content */}
-          <Text className="text-gray-800 text-base leading-6 mb-8 text-center">
+          <Text className="text-black text-base leading-90 mb-8 text-justify">
             {entry.content}
           </Text>
 

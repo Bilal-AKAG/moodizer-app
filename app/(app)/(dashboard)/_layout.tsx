@@ -2,24 +2,33 @@ import { router, Tabs } from "expo-router";
 import React from "react";
 import {
   ActivityIndicator,
-  Platform,
+  Animated,
   Pressable,
-  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { useAuth } from "@/store/useAuthstore";
 import {
+  Anvil,
   BookOpen,
   History,
   UserCircle,
-  Settings,
-  TrendingUp,
-  Star,
 } from "lucide-react-native";
 
 const DashLayout = () => {
   const token = useAuth((state) => state.token);
   const [isLoading, setLoading] = React.useState(true);
+  
+
+
+
+
+
+
+
+
+
+
+
 
   React.useEffect(() => {
     if (!token) {
@@ -91,26 +100,9 @@ const DashLayout = () => {
         name="history"
         options={{
           title: "History",
+         
           tabBarIcon: ({ color, size }) => (
             <History color={color} size={size ?? 28} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="trends"
-        options={{
-          title: "Trends",
-          tabBarIcon: ({ color, size }) => (
-            <TrendingUp color={color} size={size ?? 28} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="favorites"
-        options={{
-          title: "Favorites",
-          tabBarIcon: ({ color, size }) => (
-            <Star color={color} size={size ?? 28} />
           ),
         }}
       />
@@ -123,15 +115,7 @@ const DashLayout = () => {
           ),
         }}
       />
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: "Settings",
-          tabBarIcon: ({ color, size }) => (
-            <Settings color={color} size={size ?? 28} />
-          ),
-        }}
-      />
+    
     </Tabs>
   );
 };
