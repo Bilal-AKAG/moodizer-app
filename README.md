@@ -220,8 +220,6 @@ src/
 - JWT-based authentication
 - Protected routes using middleware
 - Environment variable configuration
-- CORS enabled for secure cross-origin requests
-- Type-safe database operations with Prisma
 - Input validation with Zod schemas
 
 ## 🤝 Contributing
@@ -243,9 +241,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Email:** bilal.ali.irp.dev@gmail.com
 
 Feel free to reach out if you have any questions or suggestions!
-
----
-
-
 
 
