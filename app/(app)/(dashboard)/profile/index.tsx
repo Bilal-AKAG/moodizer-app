@@ -22,13 +22,14 @@ import {
   Star,
 } from "lucide-react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { userThemeStore } from "@/store/themestore";
 
 const Profile = () => {
   const user = useAuth((state) => state.user);
   const logout = useAuth((state) => state.logout);
   const router = useRouter();
   const [darkMode, setDarkMode] = React.useState(false);
-
+  const {theme,toggletheme}=userThemeStore();
   const handleLogout = async () => {
     Alert.alert("Logout", "Are you sure you want to log out?", [
       { text: "Cancel", style: "cancel" },
@@ -110,8 +111,8 @@ const Profile = () => {
 
                     <View>
                       <Switch
-                        value={darkMode}
-                        onValueChange={setDarkMode}
+                        value={!theme}
+                        onValueChange={toggletheme}
                         thumbColor={darkMode ? "#06D6A0" : "#f4f3f4"}
                         trackColor={{ false: "#d1d5db", true: "#81b0ff" }}
                       />
