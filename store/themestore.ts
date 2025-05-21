@@ -3,7 +3,7 @@ import * as SecureStore from 'expo-secure-store'
 
 type ThemeStore={
     theme:'light'|'dark'
-    toggletheme:(value:'light'|'dark')=>void
+    toggletheme:()=>void
     loadtheme:()=>Promise<void>
 }
 
