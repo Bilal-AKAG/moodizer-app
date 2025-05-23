@@ -53,7 +53,7 @@ export default function HistoryDetail() {
   useEffect(() => {
     async function fetchEntry() {
       try {
-        const res = await api.get(`/api/entry/${id}`);
+        const res = await api.get(`/api/entry/history/${id}`);
         setEntry(res.data.result);
       } catch (err) {
         console.error("Error fetching entry:", err);
@@ -84,7 +84,7 @@ export default function HistoryDetail() {
   const handleDelete = async () => {
     try {
       await api.delete(`/api/entry/${id}`);
-      router.navigate('/(app)/(dashboard)/history');
+      router.navigate('/(app)/(dashboard)/history/');
       console.log('succesfully delete entry');
     } catch (error) {
       Alert.alert("Error", "Failed to delete the entry.");

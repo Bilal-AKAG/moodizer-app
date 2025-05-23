@@ -28,8 +28,8 @@ const Profile = () => {
   const user = useAuth((state) => state.user);
   const logout = useAuth((state) => state.logout);
   const router = useRouter();
-  const [darkMode, setDarkMode] = React.useState(false);
   const {theme,toggletheme}=userThemeStore();
+  const isDarkmode=theme=="light"?false:true;
   const handleLogout = async () => {
     Alert.alert("Logout", "Are you sure you want to log out?", [
       { text: "Cancel", style: "cancel" },
@@ -43,7 +43,6 @@ const Profile = () => {
       },
     ]);
   };
-
   const formattedDate = user?.createdAt
     ? new Date(user.createdAt).toLocaleDateString()
     : "N/A";
@@ -97,7 +96,6 @@ const Profile = () => {
                 <TouchableOpacity
                   className="py-2 border-b border-[#dadada]"
                   activeOpacity={0.8}
-                  onPress={() => setDarkMode((v) => !v)}
                 >
                   <View className="flex-row justify-between">
                     <View className="bg-gray-100 p-2 rounded-full items-center flex-row gap-2">
@@ -111,9 +109,9 @@ const Profile = () => {
 
                     <View>
                       <Switch
-                        value={!theme}
+                        value={isDarkmode}
                         onValueChange={toggletheme}
-                        thumbColor={darkMode ? "#06D6A0" : "#f4f3f4"}
+                        thumbColor={isDarkmode ? "#06D6A0" : "#f4f3f4"}
                         trackColor={{ false: "#d1d5db", true: "#81b0ff" }}
                       />
                     </View>
