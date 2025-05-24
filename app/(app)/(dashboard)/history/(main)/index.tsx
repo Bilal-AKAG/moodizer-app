@@ -51,7 +51,7 @@ export default function HistoryScreen() {
 
   const fetchEntries = async () => {
     try {
-      const res = await api.get("/api/entry");
+      const res = await api.get("/api/entry/history");
       setEntries(res.data.fullEntry);
     } catch (err) {
       console.error(err);
@@ -121,7 +121,7 @@ export default function HistoryScreen() {
           <View className="flex-row gap-2">
             <TouchableOpacity
               className="bg-gray-200 p-2 rounded-full mr-2"
-              onPress={() => Alert.alert("Search", "Search coming soon!")}
+              onPress={() =>router.push('/history/search')}
             >
               <Search color="#6366F1" size={22} />
             </TouchableOpacity>

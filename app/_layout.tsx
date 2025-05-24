@@ -10,12 +10,13 @@ import { useEffect } from "react";
 import "@/global.css";
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { Slot } from "expo-router";
-import { getToken, useAuth } from "@/store/useAuthstore";
+import { Redirect, Slot } from "expo-router";
+import {getToken, useAuth } from "@/store/useAuthstore";
 import { userThemeStore } from "@/store/themestore";
 
 export default function RootLayout() {
   const loadtheme=userThemeStore((state)=>state.loadtheme);
+  
   const [loaded, error] = useFonts({
     Inter_900Black,
     Poppins_400Regular, // Regular weight
@@ -23,7 +24,6 @@ export default function RootLayout() {
     Poppins_500Medium,
     // Bold weight
   });
-
   useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();
@@ -35,7 +35,7 @@ export default function RootLayout() {
       const token = await getToken();
       if (token) {
         useAuth.setState({ token });
-        await useAuth.getState().getMe();
+        <Redirect href='/(app)/(dashboard)'/>
       } else {
         useAuth.setState({ loading: false });
       }
