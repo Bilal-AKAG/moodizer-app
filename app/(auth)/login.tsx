@@ -70,7 +70,7 @@ export default function Login() {
     >
      
         <View className="flex-1 items-center justify-center px-6">
-          {/* Logo */}
+ 
           <Image
             source={require("@/assets/images/icon.png")}
             className="w-24 h-24 mb-8 rounded-2xl shadow-lg"
@@ -82,18 +82,17 @@ export default function Login() {
             }}
           />
 
-          {/* Title */}
-          <Text className="text-4xl font-bold text-gray-900 mb-2 tracking-tight">
+          <Text className="text-4xl font-bold text-gray-900 mb-2 tracking-tight  ">
             Welcome Back
           </Text>
           <Text className="text-lg text-gray-500 mb-10 text-center">
             Sign in to your Moodizer account
           </Text>
 
-          {/* Input Fields */}
+         
           <View className="w-full mb-6">
             <View
-              className={`flex-row items-center bg-gray-100 rounded-2xl px-4 border ${
+              className={`  flex-row items-center bg-gray-100 rounded-2xl px-4 border ${
                 errors.email ? "border-red-400" : "border-gray-200"
               } h-14 mb-4`}
             >
@@ -111,19 +110,19 @@ export default function Login() {
               />
             </View>
             {errors.email && (
-              <Text className="text-sm text-red-500 mb-2 ml-1">
+              <Text className="  text-sm text-red-500 mb-2 ml-1">
                 {errors.email}
               </Text>
             )}
 
             <View
-              className={`flex-row items-center bg-gray-100 rounded-2xl px-4 border ${
+              className={` flex-row items-center bg-gray-100 rounded-2xl px-4 border ${
                 errors.password ? "border-red-400" : "border-gray-200"
               } h-14`}
             >
               <Lock color="#06D6A0" size={22} />
               <TextInput
-                className="flex-1 ml-3 text-lg text-gray-900"
+                className=" flex-1 ml-3 text-lg text-gray-900"
                 placeholder="Password"
                 placeholderTextColor="#aaa"
                 secureTextEntry={!showPassword}
@@ -137,7 +136,7 @@ export default function Login() {
                 onPress={() => setShowPassword((v) => !v)}
                 className="p-1"
                 accessibilityLabel={
-                  showPassword ? "Hide password" : "Show password"
+                  showPassword ? " Hide password" : "Show password"
                 }
               >
                 {showPassword ? (
@@ -154,7 +153,7 @@ export default function Login() {
             )}
           </View>
 
-          {/* Login Button */}
+         
           <TouchableOpacity
             className={`w-full flex-row items-center gap-1 justify-center rounded-2xl h-14 mb-4 ${
               isLoading ? "bg-gray-300" : "bg-[#111827]"
@@ -181,21 +180,21 @@ export default function Login() {
             )}
           </TouchableOpacity>
 
-          {/* Forgot Password */}
+  
           <TouchableOpacity className="w-full items-end mb-8">
             <Text className="text-lg text-[#06D6A0] font-medium">
               Forgot your password?
             </Text>
           </TouchableOpacity>
 
-          {/* bro this is  custom Divider  */}
+        
           <View className="flex-row items-center w-full my-4">
             <View className="flex-1 h-px bg-gray-200" />
             <Text className="mx-3 text-gray-400 text-lg">or</Text>
             <View className="flex-1 h-px bg-gray-200" />
           </View>
 
-          {/* Sign Up Link */}
+
           <View className="flex-row items-center mt-2">
             <Text className="text-lg text-gray-500">
               Don't have an account?{" "}
