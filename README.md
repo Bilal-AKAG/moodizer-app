@@ -2,7 +2,9 @@
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/034b703a-f110-46af-afd5-b2c57042e640" alt="Moodizer App" width="300"/>
-  
+                    
+https://github.com/user-attachments/assets/5c3b2e5f-42e4-4ec8-9e36-b108812afd01
+
   [![Frontend Repository](https://img.shields.io/badge/Frontend-Repository-blue)](https://github.com/Bilal-AKAG/moodizer-app)
   [![Backend Repository](https://img.shields.io/badge/Backend-Repository-green)](https://github.com/Bilal-AKAG/moodizer-api)
 </div>
